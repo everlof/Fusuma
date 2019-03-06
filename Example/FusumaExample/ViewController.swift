@@ -9,6 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController, FusumaDelegate {
+
+    func fusumaContinueWithoutImage() {
+        print("Ah, no")
+    }
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var showButton: UIButton!
     @IBOutlet weak var fileUrlLabel: UILabel!

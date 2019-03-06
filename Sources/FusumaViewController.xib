@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,6 +17,8 @@
                 <outlet property="doneButton" destination="5iB-Jh-kTh" id="jJj-Rx-7ob"/>
                 <outlet property="libraryButton" destination="cph-QM-jcJ" id="a4Y-xk-mq9"/>
                 <outlet property="menuView" destination="8ba-kc-jlJ" id="Gcf-Em-wAP"/>
+                <outlet property="noAccessButton" destination="z4G-Mi-1wN" id="gJT-yl-Az0"/>
+                <outlet property="noAccessLabel" destination="eek-RL-cbO" id="Fm2-mZ-idw"/>
                 <outlet property="photoLibraryViewerContainer" destination="1Pk-29-mUG" id="buU-Cs-7qz"/>
                 <outlet property="titleLabel" destination="cxN-Q8-Lgd" id="lSA-JT-Mpg"/>
                 <outlet property="videoButton" destination="8ew-Zi-63G" id="PFn-Tm-KwS"/>
@@ -74,7 +75,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CAMERA ROLL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxN-Q8-Lgd">
-                            <rect key="frame" x="56" y="17" width="302" height="21"/>
+                            <rect key="frame" x="56" y="16.666666666666664" width="302" height="21"/>
                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -145,6 +146,19 @@
                         <constraint firstAttribute="height" constant="50" id="nc5-7l-kEq"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No access" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eek-RL-cbO">
+                    <rect key="frame" x="162.66666666666666" y="190" width="89" height="23"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z4G-Mi-1wN">
+                    <rect key="frame" x="125.66666666666669" y="233" width="163" height="30"/>
+                    <state key="normal" title="Continue without image"/>
+                    <connections>
+                        <action selector="noAccessButtonPressed:" destination="-1" eventType="touchUpInside" id="fXH-eK-jJA"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -159,10 +173,14 @@
                 <constraint firstItem="8ba-kc-jlJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="Tq6-c6-93y"/>
                 <constraint firstItem="RIt-Tt-mDz" firstAttribute="leading" secondItem="1Pk-29-mUG" secondAttribute="leading" id="Zh6-JC-yZB"/>
                 <constraint firstAttribute="trailing" secondItem="1Pk-29-mUG" secondAttribute="trailing" id="b0C-4x-heo"/>
+                <constraint firstItem="z4G-Mi-1wN" firstAttribute="top" secondItem="eek-RL-cbO" secondAttribute="bottom" constant="20" id="b7y-a7-W74"/>
+                <constraint firstItem="eek-RL-cbO" firstAttribute="top" secondItem="8ba-kc-jlJ" secondAttribute="bottom" constant="120" id="bpW-aN-uFM"/>
                 <constraint firstItem="CFH-FU-LPW" firstAttribute="trailing" secondItem="1Pk-29-mUG" secondAttribute="trailing" id="dTI-0B-myd"/>
                 <constraint firstItem="RIt-Tt-mDz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="gTV-NE-IMv"/>
                 <constraint firstItem="1Pk-29-mUG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gbM-f6-jpP"/>
+                <constraint firstItem="eek-RL-cbO" firstAttribute="centerX" secondItem="1Pk-29-mUG" secondAttribute="centerX" id="paO-CG-dwx"/>
                 <constraint firstItem="RIt-Tt-mDz" firstAttribute="trailing" secondItem="1Pk-29-mUG" secondAttribute="trailing" id="u9n-zf-deV"/>
+                <constraint firstItem="z4G-Mi-1wN" firstAttribute="centerX" secondItem="1Pk-29-mUG" secondAttribute="centerX" id="ubN-Wv-4KQ"/>
                 <constraint firstItem="CFH-FU-LPW" firstAttribute="leading" secondItem="1Pk-29-mUG" secondAttribute="leading" id="xYp-HY-RNh"/>
                 <constraint firstItem="CFH-FU-LPW" firstAttribute="bottom" secondItem="1Pk-29-mUG" secondAttribute="bottom" id="zaw-12-NQW"/>
                 <constraint firstItem="RIt-Tt-mDz" firstAttribute="bottom" secondItem="1Pk-29-mUG" secondAttribute="bottom" id="zev-R6-uK3"/>
@@ -170,7 +188,7 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_check" width="48" height="48"/>
-        <image name="ic_close" width="48" height="48"/>
+        <image name="ic_check" width="144" height="144"/>
+        <image name="ic_close" width="144" height="144"/>
     </resources>
 </document>

@@ -34,6 +34,7 @@ public protocol FusumaDelegate: class {
     func fusumaMultipleImageSelected(_ images: [UIImage], source: FusumaMode)
     func fusumaVideoCompleted(withFileURL fileURL: URL)
     func fusumaCameraRollUnauthorized()
+    func fusumaContinueWithoutImage()
 
     // optional
     func fusumaImageSelected(_ image: UIImage, source: FusumaMode, metaData: ImageMetadata)
@@ -70,9 +71,12 @@ public var fusumaVideoStopImage: UIImage?
 public var fusumaCropImage: Bool  = true
 public var fusumaSavesImage: Bool = false
 
-public var fusumaCameraRollTitle = "Library"
-public var fusumaCameraTitle     = "Photo"
-public var fusumaVideoTitle      = "Video"
+public var fusumaCameraRollTitle      = "Library"
+public var fusumaCameraTitle          = "Photo"
+public var fusumaVideoTitle           = "Video"
+public var fusumaNoCameraAccessLabelTitle   = "No camera access"
+public var fusumaNoLibraryAccessLabelTitle   = "No library access"
+public var fusumaNoAccessButtonTitle  = "Continue without image"
 public var fusumaTitleFont       = UIFont(name: "AvenirNext-DemiBold", size: 15)
 
 public var autoDismiss: Bool = true
@@ -123,6 +127,8 @@ public struct ImageMetadata {
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var videoButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var noAccessLabel: UILabel!
+    @IBOutlet weak var noAccessButton: UIButton!
 
     lazy var albumView  = FSAlbumView.instance()
     lazy var cameraView = FSCameraView.instance()
@@ -130,6 +136,10 @@ public struct ImageMetadata {
 
     fileprivate var hasGalleryPermission: Bool {
         return PHPhotoLibrary.authorizationStatus() == .authorized
+    }
+
+    fileprivate var hasCameraPermissions: Bool {
+        return AVCaptureDevice.authorizationStatus(for: .video) == .authorized
     }
 
     public weak var delegate: FusumaDelegate? = nil
@@ -166,6 +176,14 @@ public struct ImageMetadata {
         videoButton.tintColor   = fusumaTintColor
         closeButton.tintColor   = fusumaTintColor
         doneButton.tintColor    = fusumaTintColor
+
+        noAccessButton.setTitle(fusumaNoAccessButtonTitle, for: .normal)
+        noAccessButton.setTitleColor(fusumaTintColor, for: .normal)
+        noAccessButton.tintColor = fusumaTintColor
+        noAccessButton.titleLabel?.font = fusumaTitleFont
+
+        noAccessLabel.font = fusumaTitleFont
+        noAccessLabel.textColor = UIColor.darkGray
 
         let bundle     = Bundle(for: self.classForCoder)
         let checkImage = fusumaCheckImage != nil ? fusumaCheckImage : UIImage(named: "ic_check", in: bundle, compatibleWith: nil)
@@ -329,6 +347,11 @@ public struct ImageMetadata {
         self.doDismiss {
             self.delegate?.fusumaClosed()
         }
+    }
+
+    @IBAction func noAccessButtonPressed(_ sender: Any) {
+        delegate?.fusumaContinueWithoutImage()
+        doDismiss(completion: nil)
     }
 
     @IBAction func libraryButtonPressed(_ sender: UIButton) {
@@ -546,11 +569,24 @@ private extension FusumaViewController {
         }
 
         view.bringSubviewToFront(menuView)
+        view.bringSubviewToFront(noAccessLabel)
+        view.bringSubviewToFront(noAccessButton)
     }
 
     func updateDoneButtonVisibility() {
+        switch mode {
+        case .camera, .video:
+            noAccessLabel.text = fusumaNoCameraAccessLabelTitle
+            noAccessButton.isHidden = hasCameraPermissions
+            noAccessLabel.isHidden = hasCameraPermissions
+        case .library:
+            noAccessLabel.text = fusumaNoLibraryAccessLabelTitle
+            noAccessButton.isHidden = hasGalleryPermission
+            noAccessLabel.isHidden = hasGalleryPermission
+        }
+
         guard hasGalleryPermission else {
-            doneButton.isHidden = true
+            doneButton.isHidden = false
             return
         }
 
